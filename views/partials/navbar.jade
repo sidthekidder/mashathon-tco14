@@ -1,0 +1,36 @@
+.navbar.navbar-default.navbar-fixed-top
+  .container
+    .navbar-header
+      button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.navbar-brand(href='/')
+        span.ion-android-user-menu
+        | Social Games
+    .collapse.navbar-collapse
+      ul.nav.navbar-nav
+        li(class=title=='Login'?'active':undefined)
+          a(href='/') Home
+        li(class=title=='Highscores'?'active':undefined)
+          a(href='/highscores') HighScores
+      ul.nav.navbar-nav.navbar-right
+        if !user
+          li(class=title=='Login'?'active':undefined)
+            a(href='/login') Login
+        else
+          li(class=title=='Score'?'active':undefined)
+            a(href='#', class='disabled') Score: #{user.score}
+          li.dropdown(class=title=='Account Management'?'active':undefined)
+            a.dropdown-toggle(href='#', data-toggle='dropdown')
+              if user.profile.picture
+                img(src='#{user.profile.picture}')
+              | #{user.profile.name || user.email || user.id}&nbsp;
+              i.caret
+            ul.dropdown-menu
+              li.divider
+              li
+                a(href='/logout')
+                  span.ion-log-out
+                  |  Logout

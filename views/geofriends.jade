@@ -1,0 +1,75 @@
+extends layout
+
+block content
+  script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAUIiHIV7LhaKpkIsCK6dqV2nw5_5MOMl0')
+  
+  h1 Geofriends
+  p.lead Guess which friend lives in the location shown on the map
+  hr
+  .row
+    .panel.panel-default
+        .panel-heading
+          #map-canvas(style='width: 1100px; height: 400px;')
+        .panel-body
+          .input-group
+            span.input-group-addon
+              | #{option1} &nbsp;&nbsp;&nbsp;&nbsp;
+              input(type='radio' class='rBtn' name='choice' value='#{option1}')
+            span.input-group-addon
+              | #{option2} &nbsp;&nbsp;&nbsp;&nbsp;
+              input(type='radio' class='rBtn' name='choice' value='#{option2}')
+            span.input-group-addon
+              | #{option3} &nbsp;&nbsp;&nbsp;&nbsp;
+              input(type='radio' class='rBtn' name='choice' value='#{option3}')
+            span.input-group-addon
+              | #{option4} &nbsp;&nbsp;&nbsp;&nbsp;
+              input(type='radio' class='rBtn' name='choice' value='#{option4}')    
+  script(type='text/javascript').
+    answer="#{correctAns}";
+    console.log('executed!!');
+    var choices = document.getElementsByClassName('rBtn');
+    for(var i = 0; i < choices.length; i++) {
+      choices[i].onchange = function() {
+        var opt = this.value;
+        if (opt == answer) {
+          var ansDiv = this.parentNode;
+          ansDiv.className = ansDiv.className + ' alert-success';
+          console.log('Correct!!');
+          $.ajax({
+            method:'POST',
+            url: '/inc',
+            data: { type: 'geofriends' }
+          });
+          location.reload();
+        }  else {
+          var wrongDiv = this.parentNode;
+          wrongDiv.className = wrongDiv.className + ' alert-danger';
+          console.log('Wrong!');
+          $.ajax({
+            method:'POST',
+            url: '/dec',
+            data: { type: 'geofriends' }
+          });
+          location.reload();
+        }
+      };
+    }
+
+  script(type='text/javascript').
+    lat = "#{latitude}";
+    long = "#{longitude}";
+    locName = "#{locname}";
+    function initialize() {
+      var myLatlng = new google.maps.LatLng(lat, long);
+      var mapOptions = {
+        zoom: 4,
+        center: myLatlng
+      }
+      var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+      var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          title: locName
+      });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);

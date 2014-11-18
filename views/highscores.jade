@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1.text-center Top 10 High Scores
+  p.lead.text-center These people really know their friends well!
+  hr
+  table.table.table-striped
+    thead  
+      tr.text-center
+        td
+          | Name
+        td 
+          | Score
+    tbody
+    for score in scores
+      tr.text-center
+        td= score.profile.name
+        td= score.score

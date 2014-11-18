@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  h1.text-center Social Games
+  p.lead.text-center How well do you know your friends? Find out by choosing a Game Mode!
+  hr
+  .row
+    .col-sm-4.text-center
+      h2 Guess Who
+      p Given your friend's data like birthdate, hometown and education, can you guess who it is? [20 pts]
+      p
+        a.btn.btn-default(href='/guesswho', role='button') Play Now
+    .col-sm-4.text-center
+        h2 Friendly
+        p Are these two mutual friends? [1 pt]
+        p
+          a.btn.btn-default(href='/friendly', role='button') Play Now
+    .col-sm-4.text-center
+      h2 Knowledge
+      p Do you keep up to date with what your friends are posting? [10 pts]
+      p
+        a.btn.btn-default(href='/knowledge', role='button') Play Now
+
+  hr
+  .row
+    .col-sm-offset-2
+      .col-sm-5.text-center
+        h2 Geofriends
+        p Who was here? Who was there? Can you point out your friends on a map? [5 pts]
+        p
+          a.btn.btn-default(href='/geofriends', role='button') Play Now
+      .col-sm-5.text-center
+        h2 Stalker
+        p Brush yourself up on your friends' relationship status. [1 pt]
+        p
+          a.btn.btn-default(href='/stalker', role='button') Play Now
+  hr

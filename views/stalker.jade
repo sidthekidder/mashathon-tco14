@@ -1,0 +1,61 @@
+extends layout
+
+block content
+  h1 Stalker
+  hr
+  .row
+    .panel.panel-default
+        .panel-heading
+          | Guess the relationship status of #{name}
+        .panel-body
+          .input-group
+            span.input-group-addon
+              | Single &nbsp;&nbsp;&nbsp;&nbsp;
+              input(type='radio' value='single' class='rBtn' name='choice')
+            span.input-group-addon
+              | In A Relationship &nbsp;&nbsp;&nbsp;&nbsp;
+              input(type='radio' value='in a relationship' class='rBtn' name='choice')
+            span.input-group-addon
+              | Married &nbsp;&nbsp;&nbsp;&nbsp;
+              input(type='radio' value='married' class='rBtn' name='choice')
+            span.input-group-addon
+              | Engaged &nbsp;&nbsp;&nbsp;&nbsp;
+              input(type='radio' value='engaged' class='rBtn' name='choice')
+            span.input-group-addon
+              | Divorced &nbsp;&nbsp;&nbsp;&nbsp;
+              input(type='radio' value='divorced' class='rBtn' name='choice')
+            span.input-group-addon
+              | It's Complicated &nbsp;&nbsp;&nbsp;&nbsp;
+              input(type='radio' value='its complicated' class='rBtn' name='choice')
+
+  script(type='text/javascript').
+    answer="#{status}";
+    var choices = document.getElementsByClassName('rBtn');
+    for(var i = 0; i < choices.length; i++) {
+      choices[i].onchange = function() {
+        var opt = this.value;
+        if (opt == 'its complicated') {
+          opt = "it's complicated";
+        }
+        if (opt == answer) {
+          var ansDiv = this.parentNode;
+          ansDiv.className = ansDiv.className + ' alert-success';
+          console.log('Correct!!');
+          $.ajax({
+            method:'POST',
+            url: '/inc',
+            data: { type: 'stalker' }
+          });
+          location.reload();
+        }  else {
+          var wrongDiv = this.parentNode;
+          wrongDiv.className = wrongDiv.className + ' alert-danger';
+          $.ajax({
+            method:'POST',
+            url: '/dec',
+            data: { type: 'stalker' }
+          });
+          location.reload();
+        }
+      };
+    }

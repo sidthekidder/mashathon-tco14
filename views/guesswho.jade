@@ -1,0 +1,74 @@
+extends layout
+
+block content    
+  script(type='text/javascript').
+    answer="#{mysteryName}";
+    function next() {
+      location.reload();
+    };
+    function checkName() {
+      console.log('checking now!!');
+      var info = document.getElementById('fName').value;
+      if (info == answer) {
+        var ans = document.getElementById('submission');
+        ans.className = ans.className + ' alert-success';
+        console.log('Correct!!');
+        $.ajax({
+            method:'POST',
+            url: '/inc',
+            data: { type: 'guesswho' }
+          });
+        location.reload();
+      } else {
+        var wrong = document.getElementById('submission');
+        wrong.className = wrong.className + ' alert-danger';
+        console.log('Wrong!');
+        $.ajax({
+            method:'POST',
+            url: '/dec',
+            data: { type: 'guesswho' }
+          });
+      }
+    };
+
+  h1 Guess Who
+  p.lead Guess the friend from the information given
+  hr
+  .row
+    .col-sm-6.text-center
+      | Gender:
+    .col-sm-6.text-center
+      | #{mysteryGender}
+  hr
+  .row
+    .col-sm-6.text-center
+      | Location
+    .col-sm-6.text-center
+      | #{mysteryLocation.name}
+  hr
+  .row
+    .col-sm-6.text-center
+      | Hometown:
+    .col-sm-6.text-center
+      | #{mysteryHometown.name}
+  hr
+  .row
+    .col-sm-6.text-center
+      | Birthday:
+    .col-sm-6.text-center
+      | #{mysteryBirthday}
+  hr
+  .row
+    .col-sm-6.text-center
+      | Education:
+    .col-sm-6.text-center
+      | #{mysteryEducation.school.name}
+  hr
+  .row#submission
+    .col-sm-12.text-center
+      | Enter name here
+    .col-sm-6.col-sm-offset-3.text-center
+      input(type='text', class='form-control', id='fName')
+    .col-sm-12.text-center
+    button(type='button', class='btn btn-default', onclick='checkName()') Submit
+    button(type='button', class='btn btn-default', onclick='next()') Next

@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  h1 Friendly
+  .row
+    .panel.panel-default
+        .panel-heading
+          p Are #{f1} and #{f2} mutual friends with each other?
+        .panel-body
+          .input-group
+            span.input-group-addon
+              | Yes &nbsp;&nbsp;&nbsp;&nbsp;
+              input(type='radio' value='yes' class='rBtn' name='choice')
+            span.input-group-addon
+              | No &nbsp;&nbsp;&nbsp;&nbsp;
+              input(type='radio' value='no' class='rBtn' name='choice')
+
+  script(type='text/javascript').
+    answer="#{opt}";
+    var choices = document.getElementsByClassName('rBtn');
+    for(var i = 0; i < choices.length; i++) {
+      choices[i].onchange = function() {
+        var opt = this.value;
+        if (opt == answer) {
+          var ansDiv = this.parentNode;
+          ansDiv.className = ansDiv.className + ' alert-success';
+          console.log('Correct!!');
+          $.ajax({
+            method:'POST',
+            url: '/inc',
+            data: { type: 'friendly' }
+          });
+          location.reload();
+        }  else {
+          var wrongDiv = this.parentNode;
+          wrongDiv.className = wrongDiv.className + ' alert-danger';
+          $.ajax({
+            method:'POST',
+            url: '/dec',
+            data: { type: 'friendly' }
+          });
+          location.reload();
+        }
+      };
+    }
