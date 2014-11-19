@@ -6,7 +6,7 @@
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand(href='/')
+      a.navbar-brand(href='/', style='color: #DD0404;')
         span.ion-android-user-menu
         | Social Games
     .collapse.navbar-collapse
@@ -25,7 +25,7 @@
           li.dropdown(class=title=='Account Management'?'active':undefined)
             a.dropdown-toggle(href='#', data-toggle='dropdown')
               if user.profile.picture
-                img(src='#{user.profile.picture}')
+                img.img-rounded(src='#{user.profile.picture}')
               | #{user.profile.name || user.email || user.id}&nbsp;
               i.caret
             ul.dropdown-menu

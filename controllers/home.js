@@ -102,20 +102,21 @@ exports.knowledge = function(req, res) {
 
     graph.get(randomFriendsarr[ansa].id + '/statuses', function(err, resp) {
       if (err) return next(err);
+      if (resp.data.length != 0) {
+        if (resp.data[0].message == null && resp.data[1]) {
+          resp.data[0].message = resp.data[1].message;
+        }
 
-      if (resp.data[0].message == null && resp.data[1]) {
-        resp.data[0].message = resp.data[1].message;
+        res.render('knowledge', {
+          title: 'Knowledge',
+          problemStatement: resp.data[0].message,
+          option1: randomFriendsarr[0].name,
+          option2: randomFriendsarr[1].name,
+          option3: randomFriendsarr[2].name,
+          option4: randomFriendsarr[3].name,
+          correctAns: randomFriendsarr[ansa].name
+        });
       }
-
-      res.render('knowledge', {
-        title: 'Knowledge',
-        problemStatement: resp.data[0].message,
-        option1: randomFriendsarr[0].name,
-        option2: randomFriendsarr[1].name,
-        option3: randomFriendsarr[2].name,
-        option4: randomFriendsarr[3].name,
-        correctAns: randomFriendsarr[ansa].name
-      });
     });
   });
 };

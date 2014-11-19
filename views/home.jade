@@ -1,7 +1,10 @@
 extends layout
 
 block content
-  h1.text-center Social Games
+  .text-center.h2 Hi #{user.profile.name || user.email || user.id}&nbsp;
+  if user.profile.picture
+    .text-center
+      img.img-rounded(src='#{user.profile.picture}' style='max-height:100px;max-width:100px')
   p.lead.text-center How well do you know your friends? Find out by choosing a Game Mode!
   hr
   .row
@@ -11,10 +14,10 @@ block content
       p
         a.btn.btn-default(href='/guesswho', role='button') Play Now
     .col-sm-4.text-center
-        h2 Friendly
-        p Are these two mutual friends? [1 pt]
-        p
-          a.btn.btn-default(href='/friendly', role='button') Play Now
+      h2 Geofriends
+      p Who was here? Who was there? Can you point out your friends on a map? [5 pts]
+      p
+        a.btn.btn-default(href='/geofriends', role='button') Play Now
     .col-sm-4.text-center
       h2 Knowledge
       p Do you keep up to date with what your friends are posting? [10 pts]
@@ -25,10 +28,10 @@ block content
   .row
     .col-sm-offset-2
       .col-sm-5.text-center
-        h2 Geofriends
-        p Who was here? Who was there? Can you point out your friends on a map? [5 pts]
+        h2 Friendly
+        p Are these two mutual friends? [1 pt]
         p
-          a.btn.btn-default(href='/geofriends', role='button') Play Now
+          a.btn.btn-default(href='/friendly', role='button') Play Now
       .col-sm-5.text-center
         h2 Stalker
         p Brush yourself up on your friends' relationship status. [1 pt]
